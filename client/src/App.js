@@ -7,18 +7,20 @@ import Header from './components/Header';
 import Dashboard from './pages/Dashboard';
 import Login from './pages/Login';
 import Register from './pages/Register';
-//Frontend Test
+
 function App() {
   return (
     <>
       <BrowserRouter>
-        <div className='container' >
+        <div className='container-fluid' >
           <Header />
+          <div className='container'>
           <Routes>
             <Route path='/' element={ <Dashboard /> } />
             <Route path='/login' element={ <Login /> } />
             <Route path='/register' element={ <Register /> } />
           </Routes>
+          </div>
         </div>
       </BrowserRouter>
       <ToastContainer />
