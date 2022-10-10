@@ -30,6 +30,10 @@ const updateGoal = asynchandler(async (req, res) => {
         res.status(400);
         throw new Error('Gol not found')
     }
+    if(goal.user.toString() !== req.user.id){
+        res.status(401);
+        throw new Error('User not authorized')
+    }
 
     await goal.updateOne({ text: req.body.text })
     const updatedGoal = await goal.save()
@@ -43,6 +47,10 @@ const deleteGoal = asynchandler(async (req, res) => {
     if(!goal){
         res.status(400);
         throw new Error('Gol not found')
+    }
+    if(goal.user.toString() !== req.user.id){
+        res.status(401);
+        throw new Error('User not authorized')
     }
     await goal.remove()
     res.status(200).json(req.params.id);
