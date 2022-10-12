@@ -53,7 +53,7 @@ const deleteGoal = asynchandler(async (req, res) => {
         throw new Error('User not authorized')
     }
     await goal.remove()
-    res.status(200).json(req.params.id);
+    res.status(200).json({ id: req.params.id });
 })
 
 module.exports = {
