@@ -1,0 +1,36 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: goalkeeper-client-deployment
+  labels:
+    app: goalkeeper-client
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: goalkeeper-client
+  template:
+    metadata:
+      labels:
+        app: goalkeeper-client
+    spec:
+      containers:
+      - name: goalkeeper-client
+        image: goalkeeper-client:1.0
+        imagePullPolicy: Never
+        ports:
+        - containerPort: 80
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: goalkeeper-client-service
+spec:
+  selector:
+    app: goalkeeper-client
+  type: LoadBalancer  
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 80
+      nodePort: 30000

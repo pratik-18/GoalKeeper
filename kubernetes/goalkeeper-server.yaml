@@ -1,0 +1,44 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: goalkeeper-server-deployment
+  labels:
+    app: goalkeeper-server
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: goalkeeper-server
+  template:
+    metadata:
+      labels:
+        app: goalkeeper-server
+    spec:
+      containers:
+      - name: goalkeeper-server
+        image: goalkeeper-server:1.0
+        imagePullPolicy: Never
+        ports:
+        - containerPort: 5000
+        env:
+        - name: NODE_ENV
+          value: "development"
+        - name: PORT
+          value: "5000"
+        - name: JWT_SECRET
+          value: "TopSecret"
+        - name: MONGO_URI
+          value: "MONGODB URI" 
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: goalkeeper-server-service
+spec:
+  selector:
+    app: goalkeeper-server
+  ports:
+    - protocol: TCP
+      port: 5000
+      targetPort: 5000
+
